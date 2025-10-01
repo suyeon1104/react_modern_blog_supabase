@@ -3,6 +3,7 @@ import { Calendar, Edit3, Save, X } from "lucide-react";
 // import ProfileSkeleton from "../../components/loading/ProfileSkeleton";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
     name: "John Doe",
@@ -47,6 +48,15 @@ export default function Profile() {
     },
   ];
 
+  async function signOut() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      navigate("/");
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <div>
       {/* <ProfileSkeleton /> */}
